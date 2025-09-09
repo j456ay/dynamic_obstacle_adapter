@@ -1,0 +1,54 @@
+dynamic_obstacle_adapter_node:
+  ros__parameters:
+    # Core parameters
+    use_depth: true
+    camera_info_topic: "/camera/color/camera_info"
+    depth_image_topic: "/camera/aligned_depth_to_color/image_raw"
+    detection_topic: "/detections"
+    camera_frame: "camera_color_optical_frame"
+    target_frame: "map"
+    publish_rate_hz: 10.0
+    
+    # Ground plane parameters (used when depth is not available)
+    camera_height: 1.2  # Camera height above ground in meters
+    camera_tilt_angle: 0.1  # Camera tilt angle in radians (positive = looking down)
+    
+    # Smoothing and tracking parameters
+    smoothing_alpha: 0.7  # Higher = more responsive to changes
+    obstacle_timeout: 2.0  # Seconds before removing untracked obstacles
+    max_detection_distance: 15.0  # Maximum valid detection distance in meters
+    
+    # Replanning parameters
+    replan_distance_threshold: 1.2  # Minimum distance to obstacle before replanning
+    replan_score_threshold: 10.0  # Threat score threshold for replanning
+    path_lookahead_distance: 5.0  # Distance ahead to check for obstacles
+    
+    # Class-specific parameters
+    class_params:
+      person:
+        radius: 0.8  # Safety radius around person
+        weight: 1.0  # Importance weight for threat calculation
+      bicycle:
+        radius: 1.0
+        weight: 0.8
+      car:
+        radius: 2.0
+        weight: 1.2
+      motorcycle:
+        radius: 1.2
+        weight: 0.9
+      truck:
+        radius: 3.0
+        weight: 1.5
+      bus:
+        radius: 4.0
+        weight: 1.8
+      dog:
+        radius: 0.5
+        weight: 0.6
+      cat:
+        radius: 0.3
+        weight: 0.4
+      default:
+        radius: 0.5
+        weight: 1.0
